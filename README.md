@@ -13,28 +13,37 @@ The plugin of Umeng statistics.
 ## User Guide
 
 /// 初始化Appkey
+```
 static Future<bool> initAppKey(String androidAppKey, String iosAppKey, String channel)
-
+```
 /// 事件统计功能
+```
 static Future<bool> onEvent(String id, Map<String, Object> data)
-
+```
 /// 设置用户账户
+```
 static Future<bool> onProfileSignIn(String userID)
-
+```
 /// 取消用户账户
+```
 static Future<bool> onProfileSignOff()
-
+```
 /// 自动采集页面
+```
 static Future<bool> setPageCollectionModeAuto()
-
+```
 /// 手动采集页面
+```
 static Future<bool> setPageCollectionModeManual()
-
+```
 /// 自动页面时长统计，必须配对使用
+```
 static Future<bool> onPageStart(String viewName)
-
+```
 /// 结束页面时长统计，必须配对使用
-  static Future<bool> onPageEnd(String viewName)
+```
+static Future<bool> onPageEnd(String viewName)
+```
 
 ## 代码混淆
 ```
