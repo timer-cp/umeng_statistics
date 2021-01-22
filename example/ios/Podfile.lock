@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - umeng_statistics (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - umeng_statistics (from `.symlinks/plugins/umeng_statistics/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  umeng_statistics:
+    :path: ".symlinks/plugins/umeng_statistics/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  umeng_statistics: b5d3634715d9430426a62c4ddcf77f1ba79c3937
+
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+
+COCOAPODS: 1.9.3
