@@ -1,8 +1,9 @@
 name: umeng_statistics
 description: The plugin of Umeng statistics.
 version: 0.0.1
-author:
-homepage:
+author: Timer
+homepage: https://github.com/timer-cp
+repository: https://github.com/timer-cp/umeng_statistics.git
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

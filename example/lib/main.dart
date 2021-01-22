@@ -1,7 +1,8 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:flutter/services.dart';
 import 'package:umeng_statistics/umeng_statistics.dart';
 
 void main() {
@@ -14,32 +15,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initUmeng();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
-    String platformVersion;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      platformVersion = await UmengStatistics.platformVersion;
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = platformVersion;
-    });
+  Future<void> initUmeng() async {
+    UmengStatistics.initAppKey("600a8d856a2a470e8f871143", "600a3ea16a2a470e8f8624f5", "um2");
   }
 
   @override
@@ -47,10 +30,57 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Umeng Analytics Plugin example'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(
+            children: [
+              RaisedButton(
+                onPressed: () {
+                  Map<String, Object> data = HashMap();
+                  data['tab1click'] = 1;
+                  UmengStatistics.onEvent("UMEvent", data);
+                },
+                child: Text("事件统计"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  UmengStatistics.onProfileSignIn("1001");
+                },
+                child: Text("设置用户账户"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  UmengStatistics.onProfileSignOff();
+                },
+                child: Text("取消用户账户"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  UmengStatistics.setPageCollectionModeAuto();
+                },
+                child: Text("自动采集页面"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  UmengStatistics.setPageCollectionModeManual();
+                },
+                child: Text("手动采集页面"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  UmengStatistics.onPageStart("page1");
+                },
+                child: Text("页面时长统计开始"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  UmengStatistics.onPageStart("page2");
+                },
+                child: Text("页面时长统计结束"),
+              ),
+            ],
+          ),
         ),
       ),
     );

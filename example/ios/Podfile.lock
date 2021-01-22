@@ -1,11 +1,21 @@
 PODS:
   - Flutter (1.0.0)
+  - UMCommon (7.2.5):
+    - UMDevice
+  - UMDevice (1.1.0)
   - umeng_statistics (0.0.1):
     - Flutter
+    - UMCommon
+    - UMDevice
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - umeng_statistics (from `.symlinks/plugins/umeng_statistics/ios`)
+
+SPEC REPOS:
+  trunk:
+    - UMCommon
+    - UMDevice
 
 EXTERNAL SOURCES:
   Flutter:
@@ -15,7 +25,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  umeng_statistics: b5d3634715d9430426a62c4ddcf77f1ba79c3937
+  UMCommon: b5aabdb9fad44330ff8738d9bc46ebf93db14bf2
+  UMDevice: 28d21a568c8e8322e5a03bbd53b138d0c098d3b3
+  umeng_statistics: a27ba5ecb9ec95c5cf0027591dbf68223a157f49
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
