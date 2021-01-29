@@ -1,6 +1,7 @@
 package com.yanyi.tejia.plugin.umeng_statistics;
 
 import android.content.Context;
+import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 
@@ -10,6 +11,7 @@ import com.umeng.commonsdk.UMConfigure;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.UUID;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
@@ -38,12 +40,17 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
             mContext = flutterPluginBinding.getApplicationContext();
         }
 
+        if (SPUtils.get(mContext, Consts.USER_ID, null) == null) {
+            String androidId = Settings.Secure.getString(mContext.getContentResolver(), Settings.Secure.ANDROID_ID);
+            SPUtils.put(mContext, Consts.USER_ID, androidId == null || androidId.length() == 0 ? UUID.randomUUID().toString().replaceAll("_", "") : androidId);
+        }
+
         try {
             Class<?> config = Class.forName("com.umeng.commonsdk.UMConfigure");
             Method method = config.getDeclaredMethod("setWraperType", String.class, String.class);
             method.setAccessible(true);
             method.invoke(null, "flutter", "1.0");
-            android.util.Log.i("UMLog", "setWraperType:flutter1.0 success");
+//            android.util.Log.i("UMLog", "setWraperType:flutter1.0 success");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
@@ -84,11 +91,25 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
         String android = call.hasArgument("android") ? (String) call.argument("android") : null;
 //        String ios = call.hasArgument("ios") ? (String) call.argument("ios") : null;
         String channel = call.hasArgument("channel") ? (String) call.argument("channel") : null;
+        boolean logEnabled = call.hasArgument("logEnabled") ? (boolean) call.argument("logEnabled") : null;
+        boolean processEvent = call.hasArgument("processEvent") ? (boolean) call.argument("processEvent") : null;
+        boolean encryptEnabled = call.hasArgument("encryptEnabled") ? (boolean) call.argument("encryptEnabled") : null;
         if (android == null || channel == null) {
             String errorDetail = android == null ? "Android AppKey为空！" : "Channel 为空！";
             result.error(Consts.ARGUMENT_ERROR, "方法参数不正确", errorDetail);
         }
         UMConfigure.init(mContext, android, channel, UMConfigure.DEVICE_TYPE_PHONE, null);
+        boolean sign = (boolean) SPUtils.get(mContext, Consts.SIGN_KEY, true);
+        if (sign) {
+            String userId = (String) SPUtils.get(mContext, Consts.USER_ID, Consts.TEMP_USER_ID);
+            MobclickAgent.onProfileSignIn(userId);
+        } else {
+            MobclickAgent.onProfileSignOff();
+        }
+        SPUtils.put(mContext, Consts.SIGN_KEY, !sign);
+        UMConfigure.setLogEnabled(logEnabled);
+        UMConfigure.setEncryptEnabled(encryptEnabled);
+        UMConfigure.setProcessEvent(processEvent);
         result.success(true);
     }
 
@@ -99,7 +120,7 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
             result.error(Consts.ARGUMENT_ERROR, "事件ID不能为空", "事件ID为空");
         }
         MobclickAgent.onEventObject(mContext, id, data);
-        android.util.Log.i("UMLog", "onEventObject:" + id + "(" + data == null ? null : data.toString() + ")");
+//        android.util.Log.i("UMLog", "onEventObject:" + id + "(" + data == null ? null : data.toString() + ")");
         result.success(true);
     }
 
@@ -109,25 +130,25 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
             result.error(Consts.ARGUMENT_ERROR, "用户ID不能为空", "用户ID为空");
         }
         MobclickAgent.onProfileSignIn(userID);
-        android.util.Log.i("UMLog", "onProfileSignIn:" + userID);
+//        android.util.Log.i("UMLog", "onProfileSignIn:" + userID);
         result.success(true);
     }
 
     private void onProfileSignOff(@NonNull Result result) {
         MobclickAgent.onProfileSignOff();
-        android.util.Log.i("UMLog", "onProfileSignOff");
+//        android.util.Log.i("UMLog", "onProfileSignOff");
         result.success(true);
     }
 
     private void setPageCollectionModeAuto(@NonNull Result result) {
-        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.LEGACY_AUTO);
-        android.util.Log.i("UMLog", "setPageCollectionModeAuto");
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO);
+//        android.util.Log.i("UMLog", "setPageCollectionModeAuto");
         result.success(true);
     }
 
     private void setPageCollectionModeManual(@NonNull Result result) {
-        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.LEGACY_MANUAL);
-        android.util.Log.i("UMLog", "setPageCollectionModeManual");
+        MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.MANUAL);
+//        android.util.Log.i("UMLog", "setPageCollectionModeManual");
         result.success(true);
     }
 
@@ -137,7 +158,7 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
             result.error(Consts.ARGUMENT_ERROR, "页面名称不能为空", "页面名称为空");
         }
         MobclickAgent.onPageStart(viewName);
-        android.util.Log.i("UMLog", "onPageStart:" + viewName);
+//        android.util.Log.i("UMLog", "onPageStart:" + viewName);
         result.success(true);
     }
 
@@ -147,7 +168,7 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
             result.error(Consts.ARGUMENT_ERROR, "页面名称不能为空", "页面名称为空");
         }
         MobclickAgent.onPageEnd(viewName);
-        android.util.Log.i("UMLog", "onPageEnd:" + viewName);
+//        android.util.Log.i("UMLog", "onPageEnd:" + viewName);
         result.success(true);
     }
 
@@ -157,7 +178,7 @@ public class UmengStatisticsPlugin implements FlutterPlugin, MethodCallHandler {
             result.error(Consts.ARGUMENT_ERROR, "错误信息不能为空", "错误信息为空");
         }
         MobclickAgent.reportError(mContext, err);
-        android.util.Log.i("UMLog", "reportError:" + err);
+//        android.util.Log.i("UMLog", "reportError:" + err);
         result.success(true);
     }
 

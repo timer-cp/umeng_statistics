@@ -5,11 +5,11 @@
 
 @implementation UmengStatisticsPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-  FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"umeng_statistics"
-            binaryMessenger:[registrar messenger]];
-  UmengStatisticsPlugin* instance = [[UmengStatisticsPlugin alloc] init];
-  [registrar addMethodCallDelegate:instance channel:channel];
+    FlutterMethodChannel* channel = [FlutterMethodChannel
+                                     methodChannelWithName:@"umeng_statistics"
+                                     binaryMessenger:[registrar messenger]];
+    UmengStatisticsPlugin* instance = [[UmengStatisticsPlugin alloc] init];
+    [registrar addMethodCallDelegate:instance channel:channel];
 }
 
 #pragma mark - 调用方法入口
@@ -46,7 +46,11 @@
     if (ios == nil || channel == nil) {
         result([NSNumber numberWithBool:NO]);
     }
+    NSNumber *logEnabled = [arguments objectForKey:@"logEnabled"];
+    NSNumber *encryptEnabled = [arguments objectForKey:@"encryptEnabled"];
     [UMConfigure initWithAppkey:ios channel:channel];
+    [UMConfigure setLogEnabled:[logEnabled boolValue]];
+    [UMConfigure setEncryptEnabled:[encryptEnabled boolValue]];
     result([NSNumber numberWithBool:YES]);
 }
 //

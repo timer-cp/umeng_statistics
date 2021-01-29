@@ -1,18 +1,32 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class UmengStatistics {
   static const MethodChannel _channel = const MethodChannel('umeng_statistics');
 
   /// 初始化Appkey
+  ///
+  /// * androidAppKey : 友盟android AppKey
+  /// * iOSAppKey  : 友盟iOS AppKey
+  /// * channel : 渠道
+  /// * logEnabled ： 开启日志
+  /// * encryptEnabled ：加密
+  /// * processEvent ：子进程中对自定义事件进行统计
   static Future<bool> initAppKey(
-      String androidAppKey, String iosAppKey, String channel) async {
-    Map<String, String> params = HashMap();
+      String androidAppKey, String iosAppKey, String channel,
+      {bool logEnabled = false,
+      bool encryptEnabled = false,
+      processEvent = false}) async {
+    Map<String, dynamic> params = HashMap();
     params['android'] = androidAppKey;
     params['ios'] = iosAppKey;
     params['channel'] = channel;
+    params['logEnabled'] = logEnabled;
+    params['encryptEnabled'] = encryptEnabled;
+    params['processEvent'] = processEvent;
     final dynamic result = await _channel.invokeMethod("initAppKey", params);
     return result;
   }

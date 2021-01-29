@@ -22,7 +22,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initUmeng() async {
-    UmengStatistics.initAppKey("android app key", "ios app key", "um2");
+    UmengStatistics.initAppKey("android app key", "iOS app key", "xxx",
+        encryptEnabled: true);
   }
 
   @override
