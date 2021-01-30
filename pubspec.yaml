@@ -1,6 +1,6 @@
 name: umeng_statistics
-description: The plugin of Umeng statistics, The 1.0.0 version perfectly solves the problem of inaccurate statistics in Umeng. After many tests, the statistical functions of Umeng can be used normally and stably. If you have any problems in use, please file an issue in time; if you think it is good for use with your flutter App, please click the Like. This plugin will be updated and improved in time in the future. By the way, the official analytics plugin of Umeng is really bad.
-version: 1.0.1
+description: The plugin of Umeng statistics, The 1.0.0 version perfectly solves the problem of inaccurate statistics in Umeng. After many tests, the statistical functions of Umeng can be used normally and stably.
+version: 1.0.2
 #author: Timer
 homepage: https://github.com/timer-cp
 repository: https://github.com/timer-cp/umeng_statistics.git

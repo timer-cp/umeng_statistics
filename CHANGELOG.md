@@ -1,6 +1,10 @@
+## 1.0.2
+
+* format code
+
 ## 1.0.1
 
-* 完美解决Umeng统计不准确大坑
+* clean code
 
 ## 1.0.0
 
