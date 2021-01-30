@@ -1,6 +1,6 @@
 name: umeng_statistics
-description: The plugin of Umeng statistics, The 1.0.0 version perfectly solves the problem of inaccurate statistics in Umeng. After many tests, the statistical functions of Umeng can be used normally and stably.
-version: 1.0.2
+description: The plugin of Umeng statistics, The 1.0.0 version perfectly solves the problem of inaccurate statistics in Umeng.
+version: 1.0.3
 #author: Timer
 homepage: https://github.com/timer-cp
 repository: https://github.com/timer-cp/umeng_statistics.git
