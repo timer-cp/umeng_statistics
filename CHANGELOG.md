@@ -1,3 +1,7 @@
+## 1.0.4
+
+* add iOS static library support
+
 ## 1.0.3
 
 * update description
