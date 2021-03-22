@@ -1,13 +1,13 @@
 name: umeng_statistics
 description: The plugin of Umeng statistics, The 1.0.0 version perfectly solves the problem of inaccurate statistics in Umeng.
-version: 1.0.3
+version: 1.0.4
 #author: Timer
 homepage: https://github.com/timer-cp
 repository: https://github.com/timer-cp/umeng_statistics.git
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.20.0"
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
 
 dependencies:
   flutter:
